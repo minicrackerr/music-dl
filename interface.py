@@ -7,8 +7,8 @@ from func.embedder import Embedder
 from config import print_log, OUTPUT_FOLDER,illegal_characters
 
 def download_track(deezer_result: deezer.Track):
-    song_path = f"{OUTPUT_FOLDER}/{deezer_result.artist.name}/{deezer_result.album.title}/{deezer_result.album.artist.name} - {deezer_result.title}.mp3"
-    if os.path.exists(illegal_characters(song_path)):
+    song_path = f"{OUTPUT_FOLDER}/{deezer_result.artist.name}/{deezer_result.album.title}/{illegal_characters(f'{deezer_result.album.artist.name} - {deezer_result.title}.mp3')}"
+    if os.path.exists(song_path):
         print_log("Song already Downloaded", f"{deezer_result.artist.name} - {deezer_result.album.title} - {deezer_result.title}")
         return
 

@@ -26,7 +26,7 @@ class Downloader():
         """
 
         settings = Downloader.DL_SETTINGS
-        settings["paths"] = {'home': illegal_characters(f"{OUTPUT_FOLDER}/{track.artist.name}/{track.album.title}/")}
+        settings["paths"] = {'home': f"{OUTPUT_FOLDER}/{track.artist.name}/{track.album.title}/"}
         settings["outtmpl"] = {'default': illegal_characters(f'{track.album.artist.name} - {track.title}')}
         downloader = yt_dlp.YoutubeDL(Downloader.DL_SETTINGS)
 
