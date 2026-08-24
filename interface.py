@@ -27,21 +27,18 @@ def download_track(deezer_result: deezer.Track):
     Embedder(track=deezer_result).embed_all()
 
 while True:
-    # print("---------------------------------------------------------------")
-    # while True:
-    #     try: 
-    #         modus = int(input("Quit (0) | Song (1) | Album (2) | Artist (3) | "))
-    #         if modus in range(0,4): break
-    #     except ValueError: pass
-    # if modus == 0: break
+    print("---------------------------------------------------------------")
+    while True:
+        try: 
+            modus = int(input("Quit (0) | Song (1) | Album (2) | Artist (3) | "))
+            if modus in range(0,4): break
+        except ValueError: pass
+    if modus == 0: break
 
-    # while True:
-    #     userInput = input("What do you want to search for | ")
-    #     if not userInput == "": break
-    # print("---------------------------------------------------------------")
-
-    modus = 3
-    userInput = "Alex G"
+    while True:
+        userInput = input("What do you want to search for | ")
+        if not userInput == "": break
+    print("---------------------------------------------------------------")
 
     search = Search(modus=modus, request=userInput)
     deezer_result = search.choice(result=search.search())
@@ -55,5 +52,5 @@ while True:
         case 3: 
             deezer_result: deezer.Artist
             for album in deezer_result.get_albums():
-                for track in album:
+                for track in album.tracks:
                     download_track(track)
