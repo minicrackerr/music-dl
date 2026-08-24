@@ -1,7 +1,7 @@
             ###-(modus,input)-> SONG CHOICE -(track,settings)-> DOWNLOAD -(track,settings)-> METADATA
             ### settings: [path]
 
-from search import Search
+from func.search import Search
 from yt import Downloader
 from config import print_log,illegal_characters, OUTPUT_FOLDER
 
