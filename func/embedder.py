@@ -8,7 +8,7 @@ from config import OUTPUT_FOLDER,illegal_characters
 class Embedder():
     def __init__(self,track: deezer.Track):
         self.track = track
-        self.path = f"{OUTPUT_FOLDER}/{track.artist.name}/{track.album.title}/"
+        self.path = f"{OUTPUT_FOLDER}/{track.artist.name}/{track.artist.name} - {track.album.title}/"
         self.filename = illegal_characters(f'{track.album.artist.name} - {track.title}.mp3')
 
     def embed_all(self):
