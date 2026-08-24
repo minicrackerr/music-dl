@@ -2,14 +2,14 @@ import deezer
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3, APIC
 import requests
-from config import OUTPUT_FOLDER
+from config import OUTPUT_FOLDER,illegal_characters
 
 
 class Embedder():
     def __init__(self,track: deezer.Track):
         self.track = track
-        self.path = f"{OUTPUT_FOLDER}/{track.artist.name}/{track.album.title}/"
-        self.filename = f'{track.album.artist.name} - {track.title}.mp3'
+        self.path = illegal_characters(f"{OUTPUT_FOLDER}/{track.artist.name}/{track.album.title}/")
+        self.filename = illegal_characters(f'{track.album.artist.name} - {track.title}.mp3')
 
     def embed_all(self):
         self.embed_data()
