@@ -15,7 +15,7 @@ def download_track(deezer_result: deezer.Track):
     yt_result = Fetcher.fetch_song(track=deezer_result)
     if yt_result["state"]: print_log("Found Track", f'{deezer_result.artist.name} - {deezer_result.title} - https://www.youtube.com/watch?v={yt_result["track_id"]}')
     else:
-        print_log("Found not Track", f'{deezer_result.artist.name} - {deezer_result.title} - https://www.youtube.com/watch?v={yt_result["track_id"]}')
+        print_log("Found not Track", f'{deezer_result.artist.name} - {deezer_result.title}')
         return
 
     download_result = Downloader.download_song(track=deezer_result,song_id=yt_result["track_id"])
