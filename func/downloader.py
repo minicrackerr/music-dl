@@ -15,7 +15,7 @@ class Downloader():
                         'preferredcodec': 'mp3',
                         'preferredquality': '5'}]}
     
-
+    @staticmethod
     def download_song(track: deezer.Track, song_id: str) -> dict:
         """
         Takes a deezer.Track object and a song_id and downloads it from YouTube.

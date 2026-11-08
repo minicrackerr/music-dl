@@ -5,6 +5,7 @@ from config import print_log, OUTPUT_FOLDER
 
 class Fetcher():
 
+    @staticmethod
     def fetch_artist(artist: deezer.Artist) -> dict:
         """
         Takes a deezer.Artist object and searches it up on YouTube.
@@ -24,7 +25,7 @@ class Fetcher():
             else: 
                 return {"state": False, "deezer_artist": artist}
 
-
+    @staticmethod
     def fetch_album(album: deezer.Album) -> dict:
         """
         Takes a deezer.Album object and searches it up on YouTube.
@@ -54,6 +55,7 @@ class Fetcher():
         print("Album GRRR")  
         return {"state": False, "deezer_album": album}
 
+    @staticmethod
     def fetch_song(track: deezer.Track):
         """
         Takes a deezer.Track object and searches artist it up on YouTube.
@@ -68,7 +70,6 @@ class Fetcher():
         ytm = YTMusic()
         yt_tracks = ytm.search(query=f"{track.title} - {track.artist.name}",filter="songs")
         for yt_track in yt_tracks:
-            if yt_track["title"] == track.title and yt_track["album"]["name"] == track.album.title:
+            if yt_track["title"] == track.title and yt_track["artists"][0]["name"] == track.artist.name:
                 return {"state": True, "track_id": yt_track["videoId"], "deezer_track": track}
-        else:
-            return {"state": False, "deezer_track": track}
+        return {"state": False, "deezer_track": track}
