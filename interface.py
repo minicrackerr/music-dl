@@ -6,27 +6,30 @@ from func.fetcher import Fetcher
 from func.embedder import Embedder
 from config import print_log, OUTPUT_FOLDER,illegal_characters
 
-def download_track(deezer_result: deezer.Track):
-    song_path = f"{OUTPUT_FOLDER}/{deezer_result.artist.name}/{deezer_result.artist.name} - {deezer_result.album.title}/{illegal_characters(f'{deezer_result.album.artist.name} - {deezer_result.title}.mp3')}"
-    if os.path.exists(song_path):
-        print_log("Song already Downloaded", f"{deezer_result.artist.name} - {deezer_result.album.title} - {deezer_result.title}")
+def download_track(track: deezer.Track):
+    #track_path = f"{illegal_characters(OUTPUT_FOLDER)}/{illegal_characters(track.artist.name)}/{illegal_characters(track.artist.name)} - {illegal_characters(track.album.title)}/{illegal_characters(track.album.artist.name)} - {illegal_characters(track.title)}.mp3"
+    file_path = f"{illegal_characters(OUTPUT_FOLDER)}/{illegal_characters(track.artist.name)}/{illegal_characters(track.artist.name)} - {illegal_characters(track.album.title)}/"
+    file_name = f"{illegal_characters(track.album.artist.name)} - {illegal_characters(track.title)}.mp3"
+    track_path = [file_path, file_name]
+    if os.path.exists(file_path+file_name):
+        print_log("Song already downloaded", f"{track.artist.name} - {track.album.title} - {track.title}")
         return
 
-    yt_result = Fetcher.fetch_song(track=deezer_result)
-    if yt_result["state"]: 
-        print_log("Found Track", f'{deezer_result.artist.name} - {deezer_result.title} - https://www.youtube.com/watch?v={yt_result["track_id"]}')
+    yt_result = Fetcher.fetch_song(track=track)
+    if yt_result["state"]:
+        print_log("Track found", f'{track.artist.name} - {track.title} - https://www.youtube.com/watch?v={yt_result["track_id"]}')
     else:
-        print_log("Track not found", f'{deezer_result.artist.name} - {deezer_result.title}')
-
+        print_log("Track not found", f'{track.artist.name} - {track.title}')
         return
 
-    download_result = Downloader.download_song(track=deezer_result,song_id=yt_result["track_id"])
-    if download_result["state"]: print_log("Downloaded", f'{deezer_result.artist.name} - {deezer_result.title}')
+    download_result = Downloader.download_song(track=track, song_id=yt_result["track_id"], track_path=track_path)
+    if download_result["state"]: 
+        print_log("Downloaded", f'{track.artist.name} - {track.title}')
     else:
-        print_log("Downloaded", f'{deezer_result.artist.name} - {deezer_result.title}')
+        print_log("Download failed", f'{track.artist.name} - {track.title}')
         return
 
-    Embedder(track=deezer_result).embed_all()
+    Embedder(track=track, track_path=track_path).embed_all()
 
 while True:
     print("---------------------------------------------------------------")
@@ -47,7 +50,7 @@ while True:
 
     match modus:
         case 1:
-            download_track(deezer_result=deezer_result)
+            download_track(track=deezer_result)
         case 2:
             for track in deezer_result.tracks:
                 download_track(track)

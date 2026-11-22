@@ -16,9 +16,9 @@ class Downloader():
                         'preferredquality': '5'}]}
     
     @staticmethod
-    def download_song(track: deezer.Track, song_id: str) -> dict:
+    def download_song(track: deezer.Track, song_id: str, track_path: list) -> dict:
         """
-        Takes a deezer.Track object and a song_id and downloads it from YouTube.
+        Takes a deezer.Track object, the track_path and a song_id and downloads it from YouTube.
         Returns:
             if found/not found (dict): return {"state": True/False, "deezer_track": track}
                 - state (bool):
@@ -26,8 +26,10 @@ class Downloader():
         """
 
         settings = Downloader.DL_SETTINGS
-        settings["paths"] = {'home': f"{OUTPUT_FOLDER}/{track.artist.name}/{track.artist.name} - {track.album.title}/"}
-        settings["outtmpl"] = {'default': illegal_characters(f'{track.album.artist.name} - {track.title}')}
+        file_path = track_path[0]
+        file_name = track_path[1]
+        settings["paths"] = {'home': file_path}
+        settings["outtmpl"] = {'default': file_name}
         downloader = yt_dlp.YoutubeDL(Downloader.DL_SETTINGS)
 
         try:

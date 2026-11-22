@@ -6,10 +6,11 @@ from config import OUTPUT_FOLDER,illegal_characters
 
 
 class Embedder():
-    def __init__(self,track: deezer.Track):
+    def __init__(self,track: deezer.Track, track_path: str):
         self.track = track
-        self.path = f"{OUTPUT_FOLDER}/{track.artist.name}/{track.artist.name} - {track.album.title}/"
-        self.filename = illegal_characters(f'{track.album.artist.name} - {track.title}.mp3')
+        self.track_path = track_path
+        self.file_path = track_path[0]
+        self.file_name = track_path[1]
 
     def embed_all(self):
         self.embed_data()
@@ -17,7 +18,7 @@ class Embedder():
 
     def embed_data(self):
         try:
-            audio = EasyID3(self.path+self.filename)
+            audio = EasyID3(self.file_path+self.file_name)
             audio["albumartist"] = self.track.album.artist.name
             audio["artist"] = self.track.artist.name
             audio["album"] = self.track.album.title
@@ -33,7 +34,7 @@ class Embedder():
     def embed_cover(self):
         try:
             url = self.track.album.cover_medium
-            audio = ID3(self.path+self.filename)
+            audio = ID3(self.file_path+self.file_name)
             audio.delall("APIC")
             audio.add(APIC(encoding=3,mime="image/jpeg",type=3,# 3 = front cover
                 desc="Cover",data=requests.get(url).content))

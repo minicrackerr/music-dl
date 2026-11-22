@@ -5,6 +5,6 @@ def print_log(label: str,message: str):
     print(f">>> {label} || {message}")
 
 def illegal_characters(string: str) -> str:
-    for x in ["\\","/",":","*","?",'"',"<",">","|"]:
+    for x in ["\\","/",":","*","?",'"',"<",">","|","."]:
         string = string.replace(x,"")
     return string
