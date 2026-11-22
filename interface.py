@@ -8,7 +8,7 @@ from config import print_log, OUTPUT_FOLDER,illegal_characters
 
 def download_track(track: deezer.Track):
     #track_path = f"{illegal_characters(OUTPUT_FOLDER)}/{illegal_characters(track.artist.name)}/{illegal_characters(track.artist.name)} - {illegal_characters(track.album.title)}/{illegal_characters(track.album.artist.name)} - {illegal_characters(track.title)}.mp3"
-    file_path = f"{illegal_characters(OUTPUT_FOLDER)}/{illegal_characters(track.artist.name)}/{illegal_characters(track.artist.name)} - {illegal_characters(track.album.title)}/"
+    file_path = f"{OUTPUT_FOLDER}/{illegal_characters(track.artist.name)}/{illegal_characters(track.artist.name)} - {illegal_characters(track.album.title)}/"
     file_name = f"{illegal_characters(track.album.artist.name)} - {illegal_characters(track.title)}.mp3"
     track_path = [file_path, file_name]
     if os.path.exists(file_path+file_name):
